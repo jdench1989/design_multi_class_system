@@ -18,4 +18,3 @@ def test_takes_reading_with_timestamp_and_appends_to_start_of_readings_list():
 	tyre.take_reading(33, 2)
 	# print(datetime.date.today())
 	assert tyre.readings[0] == {"timestamp": date(2020, 1, 1), "pressure": 33, "tread_depth": 2}
-      
