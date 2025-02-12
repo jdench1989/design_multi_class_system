@@ -2,7 +2,22 @@
 
 ## 1. Describe the Problem
 
-_Put or write the user story here. Add any clarifying notes you might have._
+As a car owner
+So that I can keep a record of details about my tyres
+I want to keep track of the tyres individually, by their position on my car
+
+As a car owner
+So that I have the two important pieces of data for a tyre
+I want to be able to record both tyre pressure and tyre tread depth
+
+As a car owner
+So that I have a history of tyre readings
+I want to be able to keep a record of historical readings, when those were, as well as current readings
+
+As a car owner
+So that I can see the details of my car at a glance
+I want to list the tyres' positions, latest readings and when those were
+
 
 ## 2. Design the Class System
 
@@ -11,69 +26,55 @@ focus on the details you see as important, not everything. The diagram below
 uses asciiflow.com but you could also use excalidraw.com, draw.io, or miro.com_
 
 ```
-┌────────────────────────────┐
-│ MusicPlayer                │
-│                            │
-│ - tracks                   │
-│ - add(track)               │
-│ - search_by_title(keyword) │
-│   => [tracks...]           │
-└───────────┬────────────────┘
-            │
-            │ owns a list of
-            ▼
-┌─────────────────────────┐
-│ Track(title, artist)    │
-│                         │
-│ - title                 │
-│ - artist                │
-│ - format()              │
-│   => "TITLE by ARTIST"  │
-└─────────────────────────┘
+Car
+- 4x tyres
+- readings = [
+    {"timestamp": ...., 
+        "front": {"left": tyre,"right": tyre},
+        "rear": {"left": tyre, "right": tyre}
+    }
+]
+- take_reading()
+
+Tyre()
+- tread_depth
+- pressure
+
+
 ```
 
 _Also design the interface of each class in more detail._
 
 ```python
-class MusicLibrary:
-    # User-facing properties:
-    #   tracks: list of instances of Track
+class Car():
 
+    def __init__(self, fl, fr, rl, rr):
+        self.front_left = fl
+        self.front_right = fr
+        self.rear_left = rl
+        self.rear_right = rr
+        
+    def get_latest_readings(self):
+        front_left = self.front_left.get_latest_reading()
+        ...
+        return ({
+            "Front left": front_left,
+            .....
+        })
+
+class Tyre:
+    
     def __init__(self):
-        pass # No code here yet
+        self.readings = []
+        # => [{"timestamp": datetime.now, "pressure": xxxx, "tread_depth": xxxx]}, ...]
 
-    def add(self, track):
-        # Parameters:
-        #   track: an instance of Track
-        # Side-effects:
-        #   Adds the track to the tracks property of the self object
-        pass # No code here yet
+    def take_reading(self, pressure, tread_depth):
+        # side effect: append reading with timestamp to start of self readings list
+        pass
 
-    def search_by_title(self, keyword):
-        # Parameters:
-        #   keyword: string
-        # Returns:
-        #   A list of the Track objects that have titles that include the keyword
-        pass # No code here yet
+    def get_latest_reading(self):
+        return self.readings[0]
 
-
-class Track:
-    # User-facing properties:
-    #   title: string
-    #   artist: string
-
-    def __init__(self, title, artist):
-        # Parameters:
-        #   title: string
-        #   artist: string
-        # Side-effects:
-        #   Sets the title and artist properties
-        pass # No code here yet
-
-    def format(self):
-        # Returns:
-        #   A string of the form "TITLE by ARTIST"
-        pass # No code here yet
 
 ```
 
